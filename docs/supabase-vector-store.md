@@ -45,6 +45,10 @@ Fluxo básico:
 
 Após criar, acesse o **SQL Editor**.
 
+[Documentação de como criar uma Banco Vetorial no Supabase](https://supabase.com/docs/guides/ai/langchain?queryGroups=database-method&database-method=sql)
+
+![Script SQL de Criação do Banco Vetorial no Supabase ](../imagens/script-sql-de-criacao-do-banco-vetorial-no-supabase.png)
+
 ---
 
 ## 2️⃣ Ativar a extensão pgvector
@@ -156,6 +160,12 @@ Execute:
 
 ![Supabase Criando Indice Vetorial](../imagens/supabase-criando-indice-vetorial.png)
 
+> Se você for na barrinha lateral do Supabase na parte de: 'Table Editor', você conseguirá ver o resultado do Banco Vetorial criado 
+
+![Table Editor : Visualização da criação da tabela - documents](../imagens/table-editor-visualizacao-da-tabela-documents.png)
+
+![Visualização do Banco Vetorial Criado](../imagens/visualizacao-do-banco-vetorial-criado.png)
+
 ### 🧠 Sobre `lists`
 
 Controla qualidade x velocidade:
@@ -189,43 +199,71 @@ Para RAG com OpenAI, Cosine é recomendado.
 
 ## 6️⃣ Credenciais do Supabase para o n8n
 
-Para conectar o Supabase ao n8n, você precisará de:
+Para conectar o Supabase ao n8n, siga os passos abaixo:
 
-- **Project URL** (Supabase → Settings → API)
-- **Service Role Key** (Supabase → Settings → API → `service_role`)
+####🔹 1. Copiar a Project URL no Supabase
+1. Acesse o Supabase
+2. Vá em Project Settings
+3. Clique em Data API
+4. Copie a Project URL
+![Data API URL](../imagens/data-api-url.png)
 
-⚠️ Importante:
+####🔹 2. Configurar a URL no n8n
+1. No n8n, vá em Create Credential
+2. Cole a URL copiada no campo Host
+![Copiando a URL no N8N](../imagens/copiando-url-no-n8n.png)
 
-- Use a **Service Role Key apenas no backend (n8n)**.
-- Nunca exponha essa chave no frontend.
-- Ela possui acesso total ao banco.
+####🔹 3. Copiar a Service Role Key
+1. Volte ao Supabase
+2. Vá na aba API Keys
+3. Copie a chave em Secret Keys (Service Role Key)
+![Supabase API Keys](../imagens/supabase-api-keys.png)
 
-No n8n configure:
+####🔹 4. Configurar a chave no n8n
+1. No n8n, cole a chave no campo Service Role Secret
+2. Clique em Save
+![Service Role Secret no N8N](../imagens/service-role-secret-n8n.png)
 
+Se aparecer verde, a conexão foi realizada com sucesso ✅
+
+## ⚙️ Configuração Final no n8n
+
+Preencha os campos assim:
 - Host → Project URL
 - API Key → Service Role Key
-- Table → `documents`
-- Query Name → `match_documents`
+- Table Name → documents
+- Query Name → match_documents
+
+![Supabase Vector Store N8N](../imagens/Supabase-Vector-Store-N8N.png)
+
+⚠️ Importante
+- Use a Service Role Key apenas no backend (n8n).
+- ❌ Nunca exponha essa chave no frontend.
+- Ela possui acesso total ao banco de dados.
 
 ---
 
 ## 7️⃣ (Opcional) Row Level Security (RLS)
 
-Se você usa autenticação do Supabase e quer controlar acesso, habilite RLS.
+Se você usa autenticação do Supabase (Supabase Auth) e quer controlar acesso por usuário, habilite RLS.
 
-> Se você usa apenas o n8n com service key, talvez não precise.
+> ⚠️ Se você usa apenas o **n8n com Service Role Key**, não é necessário criar policies.  
+> A `service_role` **ignora RLS** e já possui acesso total ao banco.
 
-Ativar RLS:
+### Ativar RLS
 
     alter table public.documents enable row level security;
 
-Policy simples de leitura (exemplo):
+### Policy simples de leitura (exemplo para uso com Auth)
 
     create policy "allow read"
     on public.documents
     for select
     to public
     using (true);
+
+> 🔐 Essa policy permite leitura para usuários autenticados.  
+> Em ambientes reais, recomenda-se criar policies mais restritivas (ex: por `user_id` no metadata).
 
 ---
 
@@ -240,13 +278,19 @@ Policy simples de leitura (exemplo):
       array_fill(0.01::float, array[1536])::vector
     );
 
-> Isso não é um embedding real, mas serve para validar se a tabela e o tipo `vector` estão funcionando.
+![Inserindo Registro Manual Teste no Supabase](../imagens/inserindo-registro-manual-teste-no-supabase.png)
+
+![Validando se o Teste no Supabase Deu Certo Após Criação do Banco Vetorial](../imagens/validando-o-teste-supabase.png)
+
+> Isso não é um embedding real — é apenas um vetor sintético para validar se a tabela e o tipo `vector` estão funcionando corretamente.
 
 ### 8.2) Consultar por `file_id`
 
     select id, content, metadata
     from public.documents
     where metadata->>'file_id' = 'teste';
+
+![Consultando via Query o Resgistro Teste](../imagens/consultando-via-query-o-registro-teste.png)
 
 ---
 
