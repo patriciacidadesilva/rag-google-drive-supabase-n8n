@@ -27,7 +27,7 @@ Fluxo básico:
 
 1. Texto → vira **embedding** (lista de números)
 2. Esses números são armazenados no banco
-3. Pergunta do usuário → vira embedding
+3. Pergunta do usuário → vira embedding (lista de números)
 4. O banco encontra vetores mais próximos
 
 ✅ Resultado: busca por **significado**, não por palavra-chave.
@@ -55,6 +55,8 @@ No **SQL Editor**, execute:
 
 ✅ Isso habilita o tipo `vector`, usado para armazenar embeddings.
 
+![Supabase Criando a Extensão PgVector](../imagens/supabase-criando-extesao-pgvector.png)
+
 ---
 
 ## 3️⃣ Criar a tabela `documents`
@@ -68,6 +70,8 @@ No **SQL Editor**, execute:
       embedding vector(1536),
       created_at timestamptz default now()
     );
+
+![Supabase criando a tabela `documents` ](../imagens/supabase-criando-tabela-documents.png)
 
 ### 🧠 O que significa cada coluna?
 
@@ -116,6 +120,8 @@ No **SQL Editor**, execute:
     end;
     $$;
 
+![Supabase Criando a função RPC `match_documents`](../imagens/supabase-criando-a-funcai-rpc.png)
+
 ### 🧠 Explicação simples dos parâmetros
 
 - `query_embedding`: vetor da pergunta do usuário
@@ -147,6 +153,8 @@ Execute:
     on public.documents
     using ivfflat (embedding vector_cosine_ops)
     with (lists = 100);
+
+![Supabase Criando Indice Vetorial](../imagens/supabase-criando-indice-vetorial.png)
 
 ### 🧠 Sobre `lists`
 
