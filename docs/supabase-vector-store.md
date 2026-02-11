@@ -132,6 +132,8 @@ No **SQL Editor**, execute:
 - `match_count`: quantos trechos retornar (TopK)
 - `filter`: filtro opcional por metadata (ex: `{"file_id":"..."}`)
 
+---
+
 ### 🧮 Como funciona o cálculo de similaridade?
 
 A parte:
@@ -166,6 +168,8 @@ Execute:
 
 ![Visualização do Banco Vetorial Criado](../imagens/visualizacao-do-banco-vetorial-criado.png)
 
+---
+
 ### 🧠 Sobre `lists`
 
 Controla qualidade x velocidade:
@@ -177,6 +181,8 @@ Para começar, `100` é um bom valor.
 
 > 💡 Dica: o índice `ivfflat` costuma performar melhor quando a tabela já possui um volume mínimo de dados.  
 > Se estiver testando com poucos registros, você pode criar o índice após inserir alguns documentos.
+
+---
 
 ### 🧠 Sobre `vector_cosine_ops`
 
@@ -201,30 +207,32 @@ Para RAG com OpenAI, Cosine é recomendado.
 
 Para conectar o Supabase ao n8n, siga os passos abaixo:
 
-####🔹 1. Copiar a Project URL no Supabase
+**🔹 1. Copiar a Project URL no Supabase**
 1. Acesse o Supabase
 2. Vá em Project Settings
 3. Clique em Data API
 4. Copie a Project URL
 ![Data API URL](../imagens/data-api-url.png)
 
-####🔹 2. Configurar a URL no n8n
+**🔹 2. Configurar a URL no n8n**
 1. No n8n, vá em Create Credential
 2. Cole a URL copiada no campo Host
 ![Copiando a URL no N8N](../imagens/copiando-url-no-n8n.png)
 
-####🔹 3. Copiar a Service Role Key
+**🔹 3. Copiar a Service Role Key**
 1. Volte ao Supabase
 2. Vá na aba API Keys
 3. Copie a chave em Secret Keys (Service Role Key)
 ![Supabase API Keys](../imagens/supabase-api-keys.png)
 
-####🔹 4. Configurar a chave no n8n
+**🔹 4. Configurar a chave no n8n**
 1. No n8n, cole a chave no campo Service Role Secret
 2. Clique em Save
 ![Service Role Secret no N8N](../imagens/service-role-secret-n8n.png)
 
 Se aparecer verde, a conexão foi realizada com sucesso ✅
+
+---
 
 ## ⚙️ Configuração Final no n8n
 

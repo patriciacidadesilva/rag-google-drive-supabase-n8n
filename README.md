@@ -1,4 +1,31 @@
-## 🧠 Sistema RAG com Google Drive + Supabase + n8n
+<div align="center">
+
+# 🧠 Sistema RAG com Google Drive + Supabase + n8n
+
+### Google Drive → Ingestão (n8n) → Embeddings (OpenAI) → Vector Store (Supabase/pgvector) → Agente conversacional com memória
+
+<br/>
+
+![python](https://img.shields.io/badge/python-3.10%2B-blue)
+![openai](https://img.shields.io/badge/OpenAI-Embeddings%20%2B%20Chat-black)
+![supabase](https://img.shields.io/badge/Supabase-Postgres%20%2B%20pgvector-3ECF8E)
+![n8n](https://img.shields.io/badge/n8n-workflows-orange)
+![rag](https://img.shields.io/badge/RAG-retrieval--augmented%20generation-purple)
+![status](https://img.shields.io/badge/status-stable-brightgreen)
+![license](https://img.shields.io/badge/license-MIT-blueviolet)
+![maintained](https://img.shields.io/badge/maintained-yes-success)
+
+<br/>
+
+![Data Engineering](https://img.shields.io/badge/Data%20Engineering-yes-informational)
+![LLM](https://img.shields.io/badge/LLM-Apps-informational)
+![Vector Store](https://img.shields.io/badge/Vector%20Store-pgvector-informational)
+
+<br/>
+
+</div>
+
+---
 
 > Retrieval-Augmented Generation (RAG) aplicado na prática  
 > Integração completa entre Google Drive, Supabase (Vector Store) e n8n  
@@ -52,9 +79,9 @@ F --> G[Usuário]
 
 Para teste do sistema foi utilizado o documento:
 
-* 📘 Princípios de Arquitetura em Aço — Coletânea do Uso do Aço (Gerdau) extraido da internet
+> 📘 Princípios de Arquitetura em Aço — Coletânea do Uso do Aço (Gerdau)
 
-Arquivo usado como conhecimento:  
+**Arquivo usado como conhecimento:**  
 [manual-arquitetura.docx](./arquivos/manual-arquitetura.docx)
 
 O documento aborda:
